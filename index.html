@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Project 103 — Levi Huebner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf6ed;
+    --paper2:#f3ecdc;
+    --ink:#17201e;
+    --ink2:#3d4a47;
+    --muted:#6b7a76;
+    --line:#ddd3bd;
+    --teal:#0e3a3a;
+    --teal2:#147a72;
+    --teal-light:#dff0eb;
+    --gold:#c19a3a;
+    --card:#ffffff;
+    --shadow: 0 20px 50px rgba(14,58,58,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#0f1716;
+      --paper2:#131f1e;
+      --ink:#ece7d9;
+      --ink2:#c8c2b2;
+      --muted:#8a9a96;
+      --line:#23302f;
+      --teal:#a8d8cf;
+      --teal2:#7fc8bc;
+      --teal-light:#162a29;
+      --card:#16201f;
+      --shadow: 0 20px 50px rgba(0,0,0,.45);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.6}
+  a{color:inherit}
+  .serif{font-family:"Newsreader",Georgia,serif}
+  .mono{font-family:"IBM Plex Mono",monospace}
+
+  /* header */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    max-width:1120px;margin:0 auto;padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{line-height:1}
+  .brand b{font-family:"Newsreader",serif;font-size:22px;letter-spacing:-.02em;font-weight:700}
+  .brand span{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:4px;font-weight:600}
+  nav{display:flex;gap:22px;font-size:14px;font-weight:500}
+  nav a{text-decoration:none;color:var(--ink2)}
+  nav a:hover{color:var(--teal2)}
+  .nav-buy{
+    background:var(--teal);color:#fff !important;padding:9px 14px;border-radius:999px;font-weight:600
+  }
+  @media (prefers-color-scheme: dark){ .nav-buy{background:var(--teal2);color:#0a1514 !important} }
+  @media(max-width:640px){ nav a:not(.nav-buy){display:none} }
+
+  /* hero */
+  .hero{
+    max-width:1120px;margin:0 auto;padding:48px 20px 24px;
+    display:grid;grid-template-columns: 380px 1fr;gap:48px;align-items:start;
+  }
+  @media(max-width:860px){ .hero{grid-template-columns:1fr;gap:32px;padding-top:28px} }
+
+  .cover-wrap{position:relative}
+  .cover-frame{
+    background:var(--card);padding:14px 14px 18px;border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    transform: rotate(-1.2deg);
+  }
+  .cover-frame img{width:100%;display:block;aspect-ratio: 648/1000;object-fit:cover;background:#0e2a2a}
+  .cover-caption{
+    display:flex;justify-content:space-between;gap:12px;margin-top:12px;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600
+  }
+  .flip-btn{
+    margin-top:16px;width:100%;padding:11px 14px;border-radius:999px;border:1px solid var(--line);
+    background:var(--paper2);font-weight:600;font-size:14px;cursor:pointer;color:var(--ink)
+  }
+  .flip-btn:hover{border-color:var(--teal2)}
+
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal2);font-weight:700}
+  h1{
+    font-family:"Newsreader",serif;font-weight:700;letter-spacing:-.04em;
+    font-size:clamp(56px,8vw,92px);line-height:.85;margin:14px 0 10px;
+  }
+  h1 em{font-style:italic;font-weight:500}
+  .byline{font-size:18px;color:var(--ink2)}
+  .byline b{color:var(--ink)}
+  .lede{
+    margin-top:22px;font-size:19px;line-height:1.65;color:var(--ink2);max-width:620px;
+    font-family:"Newsreader",serif;
+  }
+  .lede strong{color:var(--ink)}
+  .quote{
+    margin:26px 0;padding:18px 20px;border-left:3px solid var(--gold);
+    background:var(--paper2);font-family:"Newsreader",serif;font-size:20px;line-height:1.45;font-style:italic
+  }
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    padding:14px 20px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid transparent
+  }
+  .btn-primary{background:#0e3a3a;color:white}
+  .btn-primary:hover{background:#147a72}
+  @media (prefers-color-scheme: dark){ .btn-primary{background:#7fc8bc;color:#0b1514} }
+  .btn-ghost{border-color:var(--line);background:transparent;color:var(--ink)}
+  .meta{
+    margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)
+  }
+  @media(max-width:560px){ .meta{grid-template-columns:1fr} }
+  .meta div{background:var(--paper);padding:14px 16px}
+  .meta label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px}
+  .meta span{font-weight:600;font-size:14px}
+
+  /* sections */
+  section{max-width:1120px;margin:0 auto;padding:18px 20px}
+  .section-head{
+    display:flex;align-items:end;justify-content:space-between;gap:20px;
+    border-top:2px solid var(--ink);padding-top:22px;margin-top:28px;margin-bottom:18px
+  }
+  .section-head h2{font-family:"Newsreader",serif;font-size:36px;line-height:1;margin:0;letter-spacing:-.02em}
+  .section-head p{margin:0;color:var(--muted);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-align:right}
+  @media(max-width:640px){ .section-head{flex-direction:column;align-items:start} .section-head p{text-align:left} }
+
+  .two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:36px}
+  @media(max-width:860px){ .two-col{grid-template-columns:1fr} }
+  .prose p{font-size:17px;line-height:1.75;color:var(--ink2);margin:0 0 16px}
+  .prose p:first-child::first-letter{
+    font-family:"Newsreader",serif;font-size:64px;line-height:.8;float:left;padding-right:10px;padding-top:6px;color:var(--teal);font-weight:700
+  }
+  .prose strong{color:var(--ink)}
+
+  .fact-box{background:var(--teal);color:#eaf6f2;padding:22px;border-radius:4px}
+  @media (prefers-color-scheme: dark){ .fact-box{background:#162a29;color:var(--ink)} }
+  .fact-box h3{margin:0 0 14px;font-family:"Newsreader",serif;font-size:22px}
+  .fact-box dl{margin:0;display:grid;gap:12px}
+  .fact-box dt{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.7;font-weight:700}
+  .fact-box dd{margin:2px 0 0;font-weight:600}
+
+  /* timeline */
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:900px){ .timeline{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:520px){ .timeline{grid-template-columns:1fr} }
+  .event{border:1px solid var(--line);background:var(--card);padding:18px}
+  .event .year{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--teal2);font-weight:600}
+  .event h3{font-family:"Newsreader",serif;margin:8px 0 8px;font-size:20px;line-height:1.15}
+  .event p{margin:0;font-size:14px;line-height:1.6;color:var(--ink2)}
+
+  /* character */
+  .character{
+    display:grid;grid-template-columns: 1fr 1fr;gap:0;border:1px solid var(--line);background:var(--card);overflow:hidden
+  }
+  @media(max-width:760px){ .character{grid-template-columns:1fr} }
+  .character-text{padding:28px}
+  .character-text h3{font-family:"Newsreader",serif;font-size:32px;margin:6px 0 10px;line-height:1}
+  .character-img{min-height:280px;background:
+    linear-gradient(160deg, rgba(14,58,58,.92), rgba(20,122,114,.75)),
+    radial-gradient(circle at 30% 20%, #7fc8bc 0, transparent 50%);
+    color:white;display:flex;flex-direction:column;justify-content:end;padding:24px}
+  .character-img .big{font-family:"Newsreader",serif;font-size:56px;line-height:.9;letter-spacing:-.03em}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .tag{font-size:12px;padding:6px 9px;border:1px solid var(--line);border-radius:999px;font-weight:600;color:var(--ink2)}
+
+  /* glossary */
+  .glossary-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .search{
+    flex:1;min-width:220px;padding:13px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font-size:15px;outline:none
+  }
+  .search:focus{border-color:var(--teal2)}
+  .count{font-size:13px;color:var(--muted);align-self:center;font-weight:600}
+  .terms{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:900px){ .terms{grid-template-columns:repeat(2,1fr)} }
+  @media(max-width:560px){ .terms{grid-template-columns:1fr} }
+  .term{border:1px solid var(--line);background:var(--card);padding:16px}
+  .term h4{margin:0;font-family:"Newsreader",serif;font-size:19px}
+  .term .num{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted)}
+  .term p{margin:8px 0 0;font-size:14px;line-height:1.55;color:var(--ink2)}
+  .term blockquote{margin:10px 0 0;padding-left:10px;border-left:2px solid var(--line);font-size:13px;color:var(--muted);font-style:italic}
+
+  .expressions{columns:2;column-gap:28px}
+  @media(max-width:640px){ .expressions{columns:1} }
+  .expr{break-inside:avoid;padding:12px 0;border-bottom:1px solid var(--line)}
+  .expr b{font-family:"Newsreader",serif}
+  .expr span{display:block;color:var(--ink2);font-size:14px;margin-top:2px}
+
+  /* author */
+  .author{display:grid;grid-template-columns: 120px 1fr;gap:20px;align-items:start;border:1px solid var(--line);background:var(--card);padding:24px}
+  @media(max-width:560px){ .author{grid-template-columns:1fr} }
+  .avatar{
+    width:120px;height:120px;border-radius:50%;background:var(--teal);color:white;
+    display:grid;place-items:center;font-family:"Newsreader",serif;font-size:42px;font-weight:700
+  }
+  @media (prefers-color-scheme: dark){ .avatar{background:#1e3a38} }
+
+  footer{max-width:1120px;margin:40px auto 0;padding:24px 20px 40px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <b>Project 103</b>
+      <span>Levi Huebner</span>
+    </div>
+    <nav>
+      <a href="#book">The Book</a>
+      <a href="#world">Luminara</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#author">Author</a>
+      <a class="nav-buy" href="https://a.co/d/0b9Q20QQ" target="_blank" rel="noopener">Buy on Amazon</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="cover-wrap">
+      <div class="cover-frame">
+        <img id="coverImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='648' height='1000'%3E%3Crect width='648' height='1000' fill='%230f2b31'/%3E%3Ctext x='324' y='500' font-family='Georgia,serif' font-size='34' fill='%23c9a86a' text-anchor='middle'%3EProject 103%3C/text%3E%3C/svg%3E" alt="Project 103 book cover — silhouette in front of teal glass windows" />
+        <div class="cover-caption">
+          <span id="coverLabel">Front cover</span>
+          <span>Project 103 • Book 1</span>
+        </div>
+      </div>
+      <button class="flip-btn" id="flipBtn" type="button">Flip to back cover →</button>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:14px">
+        ISBN 9798194315994<br>
+        “Why would a corporation want to do such a horrible thing?”
+      </p>
+    </div>
+
+    <div>
+      <div class="eyebrow">A cyberpunk debut • Luminara, City of Lights</div>
+      <h1>Project<br><em>103</em></h1>
+      <p class="byline">by <b>Levi Huebner</b></p>
+
+      <p class="lede">
+        <strong>Project 103 has never seen the sun.</strong>
+        His whole life has been spent inside the Heirmayth Testing Facility — a cold, clinical maze of experiments, locked doors, and memories that feel more like fragments than truth.
+      </p>
+
+      <div class="quote">Everything changes the day she arrives. She remembers streets, colors, the feeling of wind. He doesn’t.</div>
+
+      <p style="color:var(--ink2);font-size:16px;line-height:1.7;max-width:620px">
+        Together they take their chance to escape — and step into a sprawling, neon-drenched metropolis pulsing with danger, beauty, and truths that threaten to unravel everything he thought he was.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://a.co/d/0b9Q20QQ" target="_blank" rel="noopener">Get the book on Amazon ↗</a>
+        <a class="btn btn-ghost" href="#book">Read the full story</a>
+      </div>
+
+      <div class="meta" aria-label="Book details">
+        <div><label>Author</label><span>Levi Huebner</span></div>
+        <div><label>World</label><span>Luminara — Crystalline</span></div>
+        <div><label>ISBN</label><span class="mono">9798194315994</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOK -->
+  <section id="book">
+    <div class="section-head">
+      <h2>The Book</h2>
+      <p>From the back cover</p>
+    </div>
+    <div class="two-col">
+      <div class="prose">
+        <p><strong>Project 103 has never seen the sun.</strong> His entire life has been spent inside the Heirmayth Testing Facility — a cold, clinical maze of experiments, locked doors, and memories that feel more like fragments than truth. He knows nothing of the world beyond its walls, only the routines forced upon him and the silence that follows every failed test.</p>
+        <p>Everything changes the day she arrives. She’s older than the usual recruits. She remembers things he doesn’t — streets, colors, the feeling of wind. Together, they begin to question spending their life locked in the facility.</p>
+        <p>When the chance to escape finally appears, they take it… and step into a world unlike anything he imagined. A sprawling, neon-drenched metropolis pulsing with danger, beauty, and truths that threaten to unravel everything he thought he was.</p>
+        <p>Follow Project 103’s journey through a unique, futuristic urban adventure as he discovers freedom, danger, and the city that was waiting for him all along.</p>
+        <p><strong>Welcome, to Luminara, City of Lights!</strong></p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://a.co/d/0b9Q20QQ" target="_blank" rel="noopener">Buy Project 103 on Amazon</a>
+        </div>
+      </div>
+
+      <aside class="fact-box">
+        <h3>At a glance</h3>
+        <dl>
+          <div><dt>Title</dt><dd>Project 103</dd></div>
+          <div><dt>Author</dt><dd>Levi Huebner</dd></div>
+          <div><dt>Pitch</dt><dd>A cyberpunk, futuristic, tech-heavy adventure — and a debut novel.</dd></div>
+          <div><dt>Setting</dt><dd>Heirmayth Testing Facility → Luminara, City of Lights</dd></div>
+          <div><dt>ISBN</dt><dd class="mono">9798194315994</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- WORLD -->
+  <section id="world">
+    <div class="section-head">
+      <h2>Inside Luminara</h2>
+      <p>One island • Nine wards • 2070—2089</p>
+    </div>
+
+    <p style="max-width:720px;color:var(--ink2);font-size:17px;line-height:1.7;margin:0 0 20px">
+      One island. Nine wards. A half-billion lives pressed between the light and everything it cannot reach. The city has a dark side — and a long memory.
+    </p>
+
+    <div class="character">
+      <div class="character-text">
+        <div class="mono" style="font-size:12px;letter-spacing:.14em;color:var(--teal2);font-weight:600">SUBJECT FILE / 103 — IDENTITY RECOVERED</div>
+        <h3>Vaylek</h3>
+        <p style="color:var(--ink2);line-height:1.7;margin:0">“They erased his name. He gave the city the truth.”</p>
+        <p style="color:var(--ink2);line-height:1.7">Taken at five. Experimented on for fourteen years. One of three to escape Heirmayth — and the one who helped bring its tower down.</p>
+        <div class="tags">
+          <span class="tag">Project 103</span>
+          <span class="tag">Heirmayth escapee</span>
+          <span class="tag">File 003</span>
+        </div>
+      </div>
+      <div class="character-img" aria-hidden="true">
+        <div class="mono" style="font-size:12px;letter-spacing:.18em;opacity:.85">LUMINARA / CRYSTALLINE</div>
+        <div class="big">The city<br>is watching.</div>
+        <div style="opacity:.85;font-size:14px;margin-top:10px">Population approaching 500M • Archive access: public</div>
+      </div>
+    </div>
+
+    <h3 class="serif" style="font-size:24px;margin:28px 0 14px">Four fractures in the timeline</h3>
+    <div class="timeline">
+      <article class="event">
+        <div class="year">2070 — EVENT 01</div>
+        <h3>Battle of Veyra Pass</h3>
+        <p>Terrorists attempted to seize Luminara’s border. The Wardens held the pass so civilians could escape; only four defenders remained.</p>
+      </article>
+      <article class="event">
+        <div class="year">2072 — EVENT 02</div>
+        <h3>Nexulight Solo-Raid</h3>
+        <p>Orion Nolstar walked through Nexulight’s front doors alone in search of a cure. No one had ever successfully raided a corporation alone.</p>
+      </article>
+      <article class="event">
+        <div class="year">2087 — EVENT 03</div>
+        <h3>Heirmayth Tower Destruction</h3>
+        <p>Vaylek and his allies infiltrated Heirmayth, stole its data and destroyed its tower. The truth of his sacrifice reached the city years later.</p>
+      </article>
+      <article class="event">
+        <div class="year">2087—89 — EVENT 04</div>
+        <h3>The Corporate Wars</h3>
+        <p>With Heirmayth gone, the corporations fought for control of Luminara — unaware they were being indirectly controlled by the Null Dominion.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- GLOSSARY -->
+  <section id="glossary">
+    <div class="section-head">
+      <h2>Street Language</h2>
+      <p>The Grid Remembers • 36 terms</p>
+    </div>
+    <p style="color:var(--ink2);max-width:680px;margin:0 0 18px;line-height:1.7">Words travel faster than people in Luminara. Learn the language before the city learns you. Search the database below — try “ghost”, “wire”, or “light”.</p>
+
+    <div class="glossary-tools">
+      <input class="search" id="searchInput" type="search" placeholder="Search 36 terms…" aria-label="Search glossary" />
+      <span class="count" id="countLabel">Showing 36 / 36</span>
+    </div>
+
+    <div class="terms" id="termsGrid"></div>
+
+    <h3 class="serif" style="font-size:24px;margin:30px 0 6px">Street expressions</h3>
+    <div class="expressions" id="exprList"></div>
+  </section>
+
+  <!-- AUTHOR -->
+  <section id="author">
+    <div class="section-head">
+      <h2>About the Author</h2>
+      <p>Debut novel</p>
+    </div>
+    <div class="author">
+      <div class="avatar" aria-hidden="true">LH</div>
+      <div>
+        <h3 class="serif" style="margin:0;font-size:28px;line-height:1.1">Levi Huebner</h3>
+        <p style="color:var(--ink2);line-height:1.75;margin:12px 0 0">
+          Levi Huebner is the debut author of <em>Project 103</em>, a cyberpunk, futuristic, tech-heavy adventure set in Luminara, the City of Lights. The novel follows a boy raised inside a testing facility who escapes into a neon metropolis he was never meant to see — and has to decide what freedom actually costs.
+        </p>
+        <p style="color:var(--ink2);line-height:1.75">
+          <em>Project 103</em> is Book 1. The wider Luminara archive — its wards, histories, and street language — is the world the series will keep returning to.
+        </p>
+        <div class="cta-row" style="margin-top:16px">
+          <a class="btn btn-primary" href="https://a.co/d/0b9Q20QQ" target="_blank" rel="noopener">Find Project 103 on Amazon</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© Project 103 — Levi Huebner • ISBN 9798194315994</span>
+  <span>Luminara, City of Lights • Heirmayth Testing Facility</span>
+  <span><a href="https://a.co/d/0b9Q20QQ" target="_blank" rel="noopener" style="font-weight:600">Amazon listing ↗</a></span>
+</footer>
+
+<script>
+  // Cover flip
+  var front = "";
+  var back = "";
+  var img = document.getElementById("coverImg");
+  var label = document.getElementById("coverLabel");
+  var btn = document.getElementById("flipBtn");
+  var showingFront = true;
+  btn.addEventListener("click", function(){
+    showingFront = !showingFront;
+    img.src = showingFront ? front : back;
+    img.alt = showingFront
+      ? "Project 103 book cover — silhouette in front of teal glass windows"
+      : "Project 103 back cover — synopsis and ISBN barcode";
+    label.textContent = showingFront ? "Front cover" : "Back cover";
+    btn.textContent = showingFront ? "Flip to back cover →" : "← Back to front cover";
+  });
+
+
+  // Cover art loads from adjacent files (kept out of the HTML for size)
+  (function(){
+    function get(u){ return fetch(u).then(function(r){ if(!r.ok) throw new Error(u); return r.text(); }); }
+    get("images/front.b64").then(function(t){
+      front = "data:image/jpeg;base64," + t.trim();
+      if (typeof showingFront !== "undefined" && showingFront) img.src = front;
+      else if (typeof img !== "undefined") img.src = front;
+    }).catch(function(){});
+    Promise.all([get("images/back-a.b64"), get("images/back-b.b64")]).then(function(p){
+      back = "data:image/jpeg;base64," + (p[0] + p[1]).trim();
+    }).catch(function(){});
+  })();
+
+  // Glossary data — from the Luminara archive
+  var terms = [
+    ["Afterglow","The lingering feeling after an intense virtual-reality session.","Give me a minute. Still riding the afterglow."],
+    ["Blinker","Someone who jumps between jobs, crews, or neighborhoods constantly.","Jax is a blinker. Never stays anywhere longer than a month."],
+    ["Chromehead","Someone heavily augmented with cybernetics.","Don’t ask her to lift it. She’s a chromehead."],
+    ["Cloudwalking","Browsing the net aimlessly, especially forgotten networks.","Spent all night cloudwalking and found nothing."],
+    ["Coldwire","A person who stays calm under pressure.","Whole station panicked. Rook went coldwire."],
+    ["Crowdust","Cheap counterfeit technology or knockoff hardware.","That implant is crowdust. It’ll fry in a week."],
+    ["Deadlight","A place where signals, cameras, and networks don’t work.","Meet me at the deadlight under Sector Nine."],
+    ["Dreamtax","The hidden price of supposedly free entertainment, usually data harvesting.","Nothing’s free in this city. There’s always a dreamtax."],
+    ["Dusting","Deleting your digital history and disappearing from the network.","She’s dusting tonight. New name, new district."],
+    ["Echo","Someone who copies another person’s style or identity.","Quit echoing me and get your own look."],
+    ["Ghostglass","Transparent smart material that displays information.","His windows are ghostglass. He can see every drone outside."],
+    ["Glowrat","A low-level street hustler scavenging technology.","Every market has ten glowrats selling yesterday’s hardware."],
+    ["Gridburn","Exhaustion from too long connected to augmented or virtual systems.","I’ve got gridburn. No more feeds tonight."],
+    ["Hardline","Someone who refuses upgrades or digital assistance.","My grandmother’s a hardline. Still carries paper maps."],
+    ["Inkless","Someone with no official digital identity or records.","He’s inkless. The city says he doesn’t exist."],
+    ["Jolt","A sudden burst of excitement, danger, or adrenaline.","That chase gave me a serious jolt."],
+    ["Lantern","Someone who guides others through dangerous city areas.","Find a lantern before you cross the lower tunnels."],
+    ["Meatspace","The physical world, as opposed to virtual environments.","I’ll explain when you’re back in meatspace."],
+    ["Mooning","Pretending not to understand something obvious.","Don’t moon me. You know exactly what happened."],
+    ["Neonpoor","Someone who looks wealthy with flashy tech but has little money.","Fancy jacket, rented implants. Total neonpoor."],
+    ["Nullside","The forgotten or neglected parts of a city.","Nobody from uptown comes down Nullside."],
+    ["Overclocked","Extremely energetic, ambitious, or unable to slow down.","You’ve been overclocked for three days. Sleep."],
+    ["Patchwork","Someone with cybernetics from many makers or eras.","He’s pure patchwork, but every piece still works."],
+    ["Pixelghost","Someone who exists mostly online and rarely appears physically.","Nobody’s met her. She’s a pixelghost."],
+    ["Raincheck","Deliberately avoiding a situation because it feels dangerous.","I took a raincheck on that deal. Too many strangers."],
+    ["Redline","The point where body, equipment, or nerves are pushed too far.","Back off the throttle. You’re at redline."],
+    ["Rooftop","Someone independent of every major faction.","She’s a rooftop—works with everyone, belongs to nobody."],
+    ["Signal-rich","Unusually connected, informed, or lucky.","That kid’s signal-rich. Knows everything before it happens."],
+    ["Static","Useless information, gossip, or distractions.","Ignore the static. What’s the actual story?"],
+    ["Sunless","Someone uncomfortable in natural daylight after living underground.","You can always spot a sunless downtown."],
+    ["Threading","Moving carefully through danger or a tense conversation.","We’re threading tonight. Keep your profile low."],
+    ["Tinbird","A small surveillance drone.","Tinbird overhead. Act natural."],
+    ["Velvet","Something suspiciously smooth, easy, or convenient.","The deal went too velvet. Someone’s hiding something."],
+    ["Wireborn","Someone raised around connected technology from childhood.","She’s wireborn. Never learned how to use a paper terminal."],
+    ["Zeroed","Completely broke, disconnected, or without useful resources.","After the raid, we’re zeroed."],
+    ["Zipping","Leaving quickly before trouble arrives.","Lights just went red. Time to zip."]
+  ];
+
+  var expressions = [
+    ["“Keep your lights low.”","Don’t attract attention."],
+    ["“That’s tomorrow’s weather.”","That’s a problem for later."],
+    ["“Don’t feed the static.”","Don’t encourage gossip."],
+    ["“Stay signal-rich.”","Stay informed and alert."],
+    ["“Meet me where the city forgets.”","Meet somewhere hidden."],
+    ["“You smell like corporate rain.”","You seem connected to a corporation."],
+    ["“Walk soft, think loud.”","Keep a low profile while staying alert."],
+    ["“The grid remembers.”","Your actions leave digital traces."],
+    ["“No chrome, no problem.”","You don’t need expensive tech."],
+    ["“Everybody shines eventually.”","Everyone gets their moment."]
+  ];
+
+  var grid = document.getElementById("termsGrid");
+  var countLabel = document.getElementById("countLabel");
+  var searchInput = document.getElementById("searchInput");
+
+  function renderTerms(filter){
+    var q = (filter || "").trim().toLowerCase();
+    var shown = 0;
+    var html = "";
+    terms.forEach(function(t, i){
+      var hay = (t[0] + " " + t[1] + " " + t[2]).toLowerCase();
+      if(q && hay.indexOf(q) === -1) return;
+      shown++;
+      var num = String(i+1).padStart(2,"0");
+      html += '<article class="term"><div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><h4>'+t[0]+'</h4><span class="num">/'+num+'</span></div><p>'+t[1]+'</p><blockquote>“'+t[2]+'”</blockquote></article>';
+    });
+    if(!shown){
+      html = '<p style="grid-column:1/-1;color:var(--muted);padding:18px;border:1px dashed var(--line);background:var(--card)">No terms match “'+q+'”. Try “light”, “ghost”, “wire”, or clear the search.</p>';
+    }
+    grid.innerHTML = html;
+    countLabel.textContent = "Showing " + shown + " / " + terms.length;
+  }
+  renderTerms("");
+  searchInput.addEventListener("input", function(){ renderTerms(searchInput.value); });
+
+  var exprList = document.getElementById("exprList");
+  exprList.innerHTML = expressions.map(function(e){
+    return '<div class="expr"><b>'+e[0]+'</b><span>'+e[1]+'</span></div>';
+  }).join("");
+</script>
+</body>
+</html>
